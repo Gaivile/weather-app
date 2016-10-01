@@ -1,0 +1,126 @@
+body {
+  background: #ed5752;
+  font-family: 'Baloo Bhai', cursive;
+  font-size: 30px;
+  margin: 0;
+  padding: 50px;
+}
+
+.LeftAlign {
+  float: left;
+  width: 39%;
+  padding-left: 120px;
+  height: 500px;
+}
+
+.city{
+   font-size: 90px;
+   text-transform: uppercase;
+   color: #bbcf4a;
+  margin-left: -60px;
+  margin-top: 100px;
+}
+
+.country {
+  font-size: 70px;
+   color: #ffccac;
+  margin-top: -60px;
+  margin-left: -60px;
+  padding-bottom: 50px;
+}
+
+.feature{
+    font-size: 45px;
+    color: #bbcf4a;
+    padding-right: 30px;
+    margin-left: -60px;
+}
+
+.value{
+  font-size: 45px;
+  color: #ffccac;
+  float: right;
+  margin-top: -88px;
+  padding-right: 30px;
+}
+
+.RightAlign {
+  float: right;
+  width: 49%;
+  height: 500px;
+}
+
+.cityData img {
+  max-width: 400px;
+  float: left;
+  margin-top: -5px;
+}
+
+.date{
+ margin-top: -40px;
+ font-size: 30px;
+  color: #bbcf4a;
+}
+
+.weather{
+  font-size: 70px;
+  color: #bbcf4a;
+  float: left;
+  text-transform: uppercase;
+  padding-left: 60px;
+}
+
+.temp{
+  font-size: 210px;
+   text-transform: uppercase;
+   color: #ffccac;
+  float: left;
+  margin-top: -80px;
+}
+
+.ChangeLocationForm{
+  float: left;
+  margin-top: -500px;
+}
+
+input[type=text] {
+    background-color: #ffccac;
+    color: #ed5752;
+  font-size: 30px;
+  font-family: 'Baloo Bhai', cursive;
+}
+
+input[type=submit]{
+  width: 150px;
+  height: 60px;
+  background-color: #bbcf4a;
+  color: #ffccac;
+  font-family: 'Baloo Bhai', cursive;
+  font-size: 30px;
+}
+
+h1, h2, h3, h4 {
+  font-weight: bold;
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+

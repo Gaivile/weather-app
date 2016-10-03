@@ -14,26 +14,26 @@ body {
 }
 
 .city{
-   font-size: 90px;
-   text-transform: uppercase;
-   color: #bbcf4a;
+  font-size: 90px;
+  text-transform: uppercase;
+  color: #bbcf4a;
   margin-left: -60px;
   margin-top: 100px;
 }
 
 .country {
   font-size: 70px;
-   color: #ffccac;
+  color: #ffccac;
   margin-top: -60px;
   margin-left: -60px;
   padding-bottom: 50px;
 }
 
 .feature{
-    font-size: 45px;
-    color: #bbcf4a;
-    padding-right: 30px;
-    margin-left: -60px;
+  font-size: 45px;
+  color: #bbcf4a;
+  padding-right: 30px;
+  margin-left: -60px;
 }
 
 .value{
@@ -57,8 +57,8 @@ body {
 }
 
 .date{
- margin-top: -40px;
- font-size: 30px;
+  margin-top: -40px;
+  font-size: 30px;
   color: #bbcf4a;
 }
 
@@ -72,8 +72,8 @@ body {
 
 .temp{
   font-size: 210px;
-   text-transform: uppercase;
-   color: #ffccac;
+  text-transform: uppercase;
+  color: #ffccac;
   float: left;
   margin-top: -80px;
 }
@@ -84,8 +84,8 @@ body {
 }
 
 input[type=text] {
-    background-color: #ffccac;
-    color: #ed5752;
+  background-color: #ffccac;
+  color: #ed5752;
   font-size: 30px;
   font-family: 'Baloo Bhai', cursive;
 }

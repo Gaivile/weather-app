@@ -5,14 +5,11 @@
   (:use [clojure.data.json :only [read-json pprint-json]]
         [clojure.string :only [join split]]))
 
+
 (def search-url "http://autocomplete.wunderground.com/aq?query=")
 (def base-url "http://api.wunderground.com/api/")
-(def my-key "e2216f14d51a0427")
+(def my-key "XXXXXXXXXXXXXXXX")
 (def feature ["conditions" "astronomy"])
-
-;; initial location
-(def ^:private city (atom "London"))
-(def ^:private country (atom "UK"))
 
 (defn create-search-url [cityLocation]
   "Create a URL to get names for cities and countries"
@@ -43,23 +40,29 @@
       :body
       read-json))
 
-;; initial data - using atoms to store information and easily change it for a new city (starts with London)
-(def ^:private data (atom (api-call)))
-(def ^:private temperature (atom (str (get (get @data :current_observation) :temp_c) "°C")))
-(def ^:private date (atom (apply str (drop-last 15 (get (get @data :current_observation) :local_time_rfc822)))))
-(def ^:private condition (atom (get (get @data :current_observation) :weather)))
-(def ^:private wind (atom (str (get (get @data :current_observation) :wind_kph) "km/h")))
-(def ^:private feels-like (atom (str (get (get @data :current_observation) :feelslike_c) "°C")))
-(def ^:private humidity (atom (get (get @data :current_observation) :relative_humidity)))
-(def ^:private sunrise (atom (str (get (get (get @data :sun_phase) :sunrise) :hour) ":" (get (get (get @data :sun_phase) :sunrise) :minute))))
-(def ^:private sunset (atom (str (get (get (get @data :sun_phase) :sunset) :hour) ":" (get (get (get @data :sun_phase) :sunset) :minute))))
-(def ^:private imgIcon (atom (str "http://icons.wxug.com/i/c/v4/" (get (get @data :current_observation) :icon) ".svg")))
-(def ^:private id (atom [1]))
-(def ^:private weatherData (atom [{:city @city :country @country :wind @wind :feels @feels-like
-                                   :humidity @humidity :id @id :temperature @temperature :date @date
-                                   :condition @condition :sunrise @sunrise :sunset @sunset :imgIcon @imgIcon}]))
+(defn fetch-data [city-location]
+  (when-let [city (first (split (get (first (get (findCity (:city city-location)) :RESULTS)) :name) #","))]
+    (let [country (second (split (get (first (get (findCity (:city city-location)) :RESULTS)) :name) #","))
+          data (api-call)]
+      [city country data])))
 
-(defn reset-data [cityLocation]
+(defn get-data [[city country data]]
+  (if-let [temperature (str (get-in data [:current_observation :temp_c]) "°C")]
+    (let [date (apply str (drop-last 15 (get-in data [:current_observation :local_time_rfc822])))
+          condition (get-in data [:current_observation :weather])
+          wind (str (get-in data [:current_observation :wind_kph]) "km/h")
+          feels-like (str (get-in data [:current_observation :feelslike_c]) "°C")
+          humidity (get-in data [:current_observation :relative_humidity])
+          sunrise (str (get-in data [:sun_phase :sunrise :hour]) ":" (get-in data [:sun_phase :sunrise :minute]))
+          sunset (str (get-in data [:sun_phase :sunset :hour]) ":" (get-in data [:sun_phase :sunset :minute]))
+          imgIcon (str "http://icons.wxug.com/i/c/v4/" (get-in data [:current_observation :icon]) ".svg")
+          id (System/currentTimeMillis)]
+      [{:city city :country country :wind wind :feels feels-like
+                        :humidity humidity :id id :temperature temperature :date date
+                        :condition condition :sunrise sunrise :sunset sunset :imgIcon imgIcon}])))
+
+
+#_(defn reset-data [cityLocation]
   "Get results from search: if the city is not found, don't change previous data; if city is found
   but and API doesn't return any data - show 'not found' (the case for Beijing, Shanghai and others)"
   (if (false? (empty? (get (findCity (:city cityLocation)) :RESULTS)))
@@ -104,11 +107,10 @@
   "Send and receive data to/from the frontend"
   (context "/api" []
     (GET "/weatherData" []
-      (ok @weatherData))
+      (ok (get-data(fetch-data {:city "London"}))))
 
     (POST "/weatherData" {cityLocation :params}
-      (reset! weatherData (reset-data cityLocation))
-      (ok @weatherData)
+      (ok (get-data (fetch-data cityLocation)))
       )))
 
 
